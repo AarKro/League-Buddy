@@ -1,7 +1,7 @@
 {
-  "name": "discord.ts-example",
+  "name": "apollo",
   "version": "1.0.0",
-  "description": "discordx bot example",
+  "description": "sound based discord bot",
   "main": "build/client.js",
   "scripts": {
     "build": "cpy src/assets build/assets && tsc",
@@ -9,19 +9,15 @@
     "dev": "ts-node src/client.ts"
   },
   "keywords": [
-    "discordx",
+    "voice",
     "discord.ts",
     "discord.js",
     "bot",
     "discord",
     "typescript"
   ],
-  "author": "Indian Ocean Roleplay",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/oceanroleplay/discord.ts-example/issues"
-  },
-  "homepage": "https://github.com/oceanroleplay/discord.ts-example#readme",
+  "author": "AarKro",
+  "homepage": "https://github.com/AarKro/Apollo",
   "devDependencies": {
     "cpy-cli": "^3.1.1",
     "prettier": "^2.4.1",
