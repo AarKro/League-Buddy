@@ -15,7 +15,7 @@ export abstract class AppEvents {
         return playVoiceFile(VOICE_WELCOME);
       } else if (newState.channelId === connectedChannelId && oldState.channelId !== connectedChannelId) {
         // user joined the channel
-        return playVoiceFile(VOICE_LISA_HELLO);
+        return playVoiceFile(VOICE_USER_JOINED);
       } else if (oldState.channelId === connectedChannelId && newState.channelId !== connectedChannelId) {
         // user left the channel
         return playVoiceFile(VOICE_USER_LEFT);
