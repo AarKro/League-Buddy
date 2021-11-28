@@ -1,8 +1,10 @@
-import { DiscordGatewayAdapterCreator, entersState, joinVoiceChannel, VoiceConnection, VoiceConnectionStatus } from "@discordjs/voice";
+import { entersState, joinVoiceChannel, VoiceConnectionStatus } from "@discordjs/voice";
 import { CommandInteraction, VoiceChannel } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { createDiscordJSAdapter } from "../adapters";
 import { player } from "../client";
+
+export let connectedChannelId: string = '';
 
 @Discord()
 abstract class Join {
@@ -30,12 +32,13 @@ abstract class Join {
               await entersState(voiceConnection, VoiceConnectionStatus.Ready, 30e3);
               
               voiceConnection.subscribe(player);
+              connectedChannelId = voiceChannel.id;
+              
               interaction.reply('joined voice channel !');
 
               return;
             } catch (error) {
               voiceConnection.destroy();
-              interaction.reply('');
             }
           }
         }
