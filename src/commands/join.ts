@@ -4,6 +4,7 @@ import { Discord, Slash } from "discordx";
 import { createDiscordJSAdapter } from "../adapters";
 import { player } from "../client";
 
+// TODO: refactor this so its not accessed as a global variable
 export let connectedChannelId: string = '';
 
 @Discord()
