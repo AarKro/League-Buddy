@@ -6,6 +6,7 @@ import { player } from "../client";
 
 // TODO: refactor this so its not accessed as a global variable
 export let connectedChannelId: string = '';
+export const setConnectedChannelId = (value: string) => connectedChannelId = value;
 
 @Discord()
 abstract class Join {
@@ -14,7 +15,7 @@ abstract class Join {
     interaction: CommandInteraction
   ) {
     if (interaction.guildId && interaction.member) {
-      const guild = interaction.client.guilds.cache.get(interaction.guildId)
+      const guild = interaction.client.guilds.cache.get(interaction.guildId);
 
       if (guild) {
         const member = guild.members.cache.get(interaction.member.user.id);
@@ -33,7 +34,7 @@ abstract class Join {
               await entersState(voiceConnection, VoiceConnectionStatus.Ready, 30e3);
               
               voiceConnection.subscribe(player);
-              connectedChannelId = voiceChannel.id;
+              setConnectedChannelId(voiceChannel.id);
               
               interaction.reply('joined voice channel !');
 
