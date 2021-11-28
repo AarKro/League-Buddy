@@ -2,6 +2,9 @@ import "reflect-metadata";
 import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
+import { createAudioPlayer } from "@discordjs/voice";
+
+export const player = createAudioPlayer();
 
 const client = new Client({
   simpleCommand: {
