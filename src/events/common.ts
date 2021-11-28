@@ -12,7 +12,7 @@ export abstract class AppEvents {
   @On("voiceStateUpdate")
   onMessage([oldState, newState]: ArgsOf<"voiceStateUpdate">, client: Client) {
     if (player.state.status === AudioPlayerStatus.Idle) {
-      if (newState.channelId && newState.channelId === connectedChannelId) {
+      if (newState.channelId && newState.channelId === connectedChannelId && oldState.channelId !== connectedChannelId) {
         const resource = createAudioResource(VOICE_USER_JOINED, {
           inputType: StreamType.Arbitrary,
         });
