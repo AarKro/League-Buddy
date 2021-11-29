@@ -3,6 +3,7 @@ import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
 import { createAudioPlayer } from "@discordjs/voice";
+import { processVoice } from "./voice-recognition/vosk";
 
 export const player = createAudioPlayer();
 
@@ -32,6 +33,8 @@ client.once("ready", async () => {
   await client.initApplicationPermissions();
 
   console.log("Bot started");
+
+  processVoice();
 });
 
 client.on("interactionCreate", (interaction: Interaction) => {
