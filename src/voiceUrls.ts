@@ -7,3 +7,4 @@ export const VOICE_USER_KICK = VOICE_FILE_BASE_URL + 'userkick.mp3';
 export const VOICE_WELCOME = VOICE_FILE_BASE_URL + 'welcome.mp3';
 export const VOICE_YAMETE = VOICE_FILE_BASE_URL + 'yamete.mp3';
 export const VOICE_LISA_HELLO = VOICE_FILE_BASE_URL + 'lisa_hello.mp3';
+export const VOICE_THANK_YOU = VOICE_FILE_BASE_URL + 'yourewelcome.mp3';

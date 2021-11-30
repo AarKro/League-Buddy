@@ -6,7 +6,8 @@ import { processVoice } from './vosk';
 import { Transform } from 'stream';
 import fs from 'fs';
 import { playVoiceFile } from '../events/utils';
-import { VOICE_LISA_HELLO } from '../voiceUrls';
+import { VOICE_LISA_HELLO, VOICE_THANK_YOU, VOICE_WELCOME, VOICE_YAMETE } from '../voiceUrls';
+import { setListenMode } from '../events/common';
 
 const getDisplayName = (userId: string, user?: User) => {
 	return user ? `${user.username}_${user.discriminator}` : userId;
@@ -36,12 +37,16 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
 				// Also ignore files bigger than 100KB, since they likely arent commands and take a long time to process
 				if (stats.size > 10000 && stats.size < 100000) {
 					const result = await processVoice(filename);
-
 					if (result.id === 1) {
-						playVoiceFile(VOICE_LISA_HELLO);
+						playVoiceFile(VOICE_THANK_YOU);
+						setListenMode(false);
+					} else if (result.id === 2) {
+						playVoiceFile(VOICE_YAMETE);
+						setListenMode(false);
 					}
 				} else throw 'recording smaller than 10KB or bigger than 100KB'
 			} catch (err) {
+			} finally {
 				fs.unlink(filename, () => undefined);
 			}
 		});

@@ -8,6 +8,9 @@ import { createListeningStream } from "../voice-recognition/createListeningStrea
 import { VOICE_USER_JOINED, VOICE_USER_LEFT, VOICE_WELCOME } from "../voiceUrls";
 import { ATOM_ID, ATOM_TEAMSPEAK_CHANNEL, playVoiceFile } from "./utils";
 
+let listenMode = false;
+export const setListenMode = (value: boolean) => listenMode = value;
+
 @Discord()
 export abstract class AppEvents {
   @On("voiceStateUpdate")
@@ -44,13 +47,13 @@ export abstract class AppEvents {
   
           try {
             await entersState(voiceConnection, VoiceConnectionStatus.Ready, 30e3);
+            setConnectedChannelId(voiceChannel.id);
             
             voiceConnection.subscribe(player);
-            setConnectedChannelId(voiceChannel.id);
 
             const receiver = voiceConnection.receiver;
             receiver.speaking.on('start', (userId) => {
-              if (player.state.status === AudioPlayerStatus.Idle) {
+              if (listenMode && player.state.status === AudioPlayerStatus.Idle) {
                 createListeningStream(receiver, userId, client.users.cache.get(userId));
               }
             });
@@ -64,3 +67,17 @@ export abstract class AppEvents {
     }
   }
 }
+
+let lockListenMode = false;
+
+player.on('stateChange', (oldState, newState) => {
+  if (!lockListenMode && oldState.status === AudioPlayerStatus.Playing && newState.status === AudioPlayerStatus.Idle) {
+    // listen for a few secs to respond to thanks
+    setListenMode(true);
+    setTimeout(() => {
+      setListenMode(false);
+      lockListenMode = true;
+      setTimeout(() => lockListenMode = false, 5000);
+    }, 2000);
+  }
+});

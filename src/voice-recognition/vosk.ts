@@ -16,24 +16,19 @@ const fuse = new Fuse(
   [
     {
       id: 1,
-      minChars: 10,
-      command: ['Apollo, say hello', 'Apollo, say hi'],
+      minChars: 5,
+      command: ['thanks linus', 'thank you linus', 'and carolinas', 'thank you linas', 'thanks leanest', 'thank you leanest', 'thank you', 'thanks', 'thank you landlords'],
     },
     {
       id: 2,
-      minChars: 10,
-      command: ['Apollo, pray hey you'],
-    },
-    {
-      id: 3,
-      minChars: 10,
-      command: ['Apollo, test random'],
+      minChars: 5,
+      command: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'kys linus', 'shadap linus', 'idiot linus', 'baka linus', 'baaka linus', 'go commit die linus', 'fuck off leanest', 'shutup leanest', 'k y s leanest'],
     },
   ],
   { 
     includeScore: true,
     keys: ['command'],
-    threshold: 0.3
+    threshold: 0.6
   },
 );
 
@@ -44,16 +39,19 @@ export const processVoice = async (filename: string, log = -1) => {
     const result: VoskResult = await transcriptFromFile(filename, model)
     const match = fuse.search(result.text);
     
-    console.log('--------------------------------------');
-    console.log(result.text);
-    console.log(match);
-    console.log('--------------------------------------');
+    if (match.length) {
+      let bestMatch = match[0];
+      for (const item of match) {
+        bestMatch = (item.score || 1) < (bestMatch.score || 1) ? item : bestMatch;
+      }
+      
+      console.log('--------------------------------------');
+      console.log(result.text);
+      console.log(bestMatch);
+      console.log('--------------------------------------');
 
-    if (match[0]?.item) {
-      const item = match[0]?.item;
-
-      if (result.text.length >= item.minChars) {
-        return Promise.resolve(item);
+      if (result.text.length >= bestMatch.item.minChars) {
+        return Promise.resolve(bestMatch.item);
       } 
 
       return Promise.reject('query too small. has to approximatly match in size');
