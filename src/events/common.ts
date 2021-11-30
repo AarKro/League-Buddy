@@ -48,10 +48,12 @@ export abstract class AppEvents {
             voiceConnection.subscribe(player);
             setConnectedChannelId(voiceChannel.id);
 
-            // const receiver = voiceConnection.receiver;
-            // receiver.speaking.on('start', (userId) => {
-            //   createListeningStream(receiver, userId, client.users.cache.get(userId));
-            // });
+            const receiver = voiceConnection.receiver;
+            receiver.speaking.on('start', (userId) => {
+              if (player.state.status === AudioPlayerStatus.Idle) {
+                createListeningStream(receiver, userId, client.users.cache.get(userId));
+              }
+            });
             
             return playVoiceFile(VOICE_WELCOME);
           } catch (error) {
