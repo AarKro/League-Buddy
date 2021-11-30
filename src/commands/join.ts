@@ -22,7 +22,7 @@ abstract class Join {
 
         if (member) {
           const voiceChannel = member.voice.channel;
-
+          
           if (voiceChannel && voiceChannel.joinable && voiceChannel instanceof VoiceChannel) {
             const voiceConnection = joinVoiceChannel({
               channelId: voiceChannel.id,

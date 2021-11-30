@@ -16,19 +16,17 @@ const fuse = new Fuse(
   [
     {
       id: 1,
-      minChars: 5,
       command: ['thanks linus', 'thank you linus', 'and carolinas', 'thank you linas', 'thanks leanest', 'thank you leanest', 'thank you', 'thanks', 'thank you landlords'],
     },
     {
       id: 2,
-      minChars: 5,
-      command: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'kys linus', 'shadap linus', 'idiot linus', 'baka linus', 'baaka linus', 'go commit die linus', 'fuck off leanest', 'shutup leanest', 'k y s leanest'],
+      command: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'kys linus', 'shadap linus', 'idiot linus', 'baka linus', 'baaka linus', 'go commit die linus', 'fuck off leanest', 'shutup leanest', 'k y s leanest', 'baaaka', 'walker'],
     },
   ],
   { 
     includeScore: true,
     keys: ['command'],
-    threshold: 0.6
+    threshold: 0.4
   },
 );
 
@@ -39,6 +37,8 @@ export const processVoice = async (filename: string, log = -1) => {
     const result: VoskResult = await transcriptFromFile(filename, model)
     const match = fuse.search(result.text);
     
+    console.log(filename.split('/')[filename.split('/').length - 1] + ' --- ' + result.text)
+
     if (match.length) {
       let bestMatch = match[0];
       for (const item of match) {
@@ -50,11 +50,7 @@ export const processVoice = async (filename: string, log = -1) => {
       console.log(bestMatch);
       console.log('--------------------------------------');
 
-      if (result.text.length >= bestMatch.item.minChars) {
-        return Promise.resolve(bestMatch.item);
-      } 
-
-      return Promise.reject('query too small. has to approximatly match in size');
+      return Promise.resolve(bestMatch.item);
     } else {
       return Promise.reject('recording did not match any registered lines');
     }
