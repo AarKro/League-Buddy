@@ -1,0 +1,55 @@
+import { OpusEncoder } from '@discordjs/opus';
+import { EndBehaviorType, VoiceReceiver } from '@discordjs/voice';
+import { User } from 'discord.js';
+import { FileWriter } from 'wav';
+import { processVoice } from './vosk';
+import { Transform } from 'stream';
+import fs from 'fs';
+
+const getDisplayName = (userId: string, user?: User) => {
+	return user ? `${user.username}_${user.discriminator}` : userId;
+}
+
+export const createListeningStream = (receiver: VoiceReceiver, userId: string, user?: User) => {
+	const filename = `${__dirname}/../assets/recordings/${Date.now()}-${getDisplayName(userId, user)}.wav`;
+	const encoder = new OpusEncoder(16000, 1)
+	
+	const audioFile =	receiver.subscribe(userId, {
+			end: {
+				behavior: EndBehaviorType.AfterSilence,
+				duration: 100,
+			},
+	})
+	.pipe(new OpusDecodingStream({}, encoder))
+	.pipe(new FileWriter(filename, {
+			channels: 1,
+			sampleRate: 16000
+	}));
+
+	audioFile.on('done', () => {
+		fs.stat(filename, (err, stats) => {
+			// Only process file if its bigger than 10KB.
+			// This way we ignore empty recordings.
+			if (stats.size > 10000) {
+				processVoice(filename)
+			} else {
+				fs.unlink(filename, () => undefined);
+			}
+		});
+	});
+}
+
+// weird internet magic... maybe investigate more later
+class OpusDecodingStream extends Transform {
+	encoder
+	
+	constructor(options: any, encoder: any) {
+			super(options)
+			this.encoder = encoder
+	}
+	
+	_transform(data: any, encoding: any, callback: any) {
+			this.push(this.encoder.decode(data))
+			callback()
+	}
+}

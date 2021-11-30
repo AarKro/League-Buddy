@@ -4,6 +4,7 @@ import { Discord, On, Client, ArgsOf } from "discordx";
 import { createDiscordJSAdapter } from "../adapters";
 import { player } from "../client";
 import { connectedChannelId, setConnectedChannelId } from "../commands/join";
+import { createListeningStream } from "../voice-recognition/createListeningStream";
 import { VOICE_USER_JOINED, VOICE_USER_LEFT, VOICE_WELCOME } from "../voiceUrls";
 import { ATOM_ID, ATOM_TEAMSPEAK_CHANNEL, playVoiceFile } from "./utils";
 
@@ -37,7 +38,8 @@ export abstract class AppEvents {
           const voiceConnection = joinVoiceChannel({
             channelId: voiceChannel.id,
             guildId: ATOM_ID,
-            adapterCreator: createDiscordJSAdapter(voiceChannel as VoiceChannel)
+            adapterCreator: createDiscordJSAdapter(voiceChannel as VoiceChannel),
+            selfDeaf: false,
           });
   
           try {
@@ -45,6 +47,11 @@ export abstract class AppEvents {
             
             voiceConnection.subscribe(player);
             setConnectedChannelId(voiceChannel.id);
+
+            // const receiver = voiceConnection.receiver;
+            // receiver.speaking.on('start', (userId) => {
+            //   createListeningStream(receiver, userId, client.users.cache.get(userId));
+            // });
             
             return playVoiceFile(VOICE_WELCOME);
           } catch (error) {

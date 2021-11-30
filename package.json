@@ -4,7 +4,7 @@
   "description": "sound based discord bot",
   "main": "build/client.js",
   "scripts": {
-    "build": "copyfiles -u 1 src/assets/** build/ && tsc",
+    "build": "copyfiles -u 1 src/assets/** build/ && npx mkdirp build/assets/recordings/ && tsc",
     "start": "npm run build && node build/client.js",
     "dev": "ts-node src/client.ts"
   },
@@ -31,6 +31,8 @@
     "discord.js": "^13.2.0",
     "discordx": "^7.0.0",
     "ffmpeg-static": "^4.4.0",
+    "node-crc": "^2.0.11",
+    "prism-media": "^2.0.0-alpha.0",
     "reflect-metadata": "^0.1.13",
     "tweetnacl": "^1.0.3",
     "vosk": "^0.3.32",

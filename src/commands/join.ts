@@ -27,7 +27,8 @@ abstract class Join {
             const voiceConnection = joinVoiceChannel({
               channelId: voiceChannel.id,
               guildId: guild.id,
-              adapterCreator: createDiscordJSAdapter(voiceChannel)
+              adapterCreator: createDiscordJSAdapter(voiceChannel),
+              selfDeaf: false,
             });
 
             try {
