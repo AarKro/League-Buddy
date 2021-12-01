@@ -8,7 +8,7 @@ const voiceCommands = [
   },
   {
     id: 2,
-    matches: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'kys linus', 'idiot linus', 'baka linus', 'go commit die linus', 'baka'],
+    matches: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'kys linus', 'idiot linus', 'baka linus', 'go commit die linus', 'baka', 'fuck you'],
     voskGrammar: ['fuck off', 'shut up', 'kill yourself', 'baka', 'go commit die', 'no one cares']
   }
 ];

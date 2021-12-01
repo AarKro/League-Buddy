@@ -77,6 +77,11 @@ export class VoskVoiceProcessor {
         let bestMatch = matches[0];
         for (const match of matches) {
           bestMatch = (match.score || 1) < (bestMatch.score || 1) ? match : bestMatch;
+
+          if (Number(match.score) > 1) {
+            bestMatch = match
+            return;
+          }
         }
         
         console.log('--------------------------------------');
