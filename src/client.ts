@@ -3,8 +3,12 @@ import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
 import { createAudioPlayer } from "@discordjs/voice";
+import { VoskVoiceProcessor } from "./voice-recognition/VoskVoiceProcessor";
 
 export const player = createAudioPlayer();
+
+export const voiceProcessor = new VoskVoiceProcessor(__dirname + '/assets/vosk-model-en-us-0.22-lgraph');
+voiceProcessor.startVoiceProcessing();
 
 const client = new Client({
   simpleCommand: {

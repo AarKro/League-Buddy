@@ -1,17 +1,11 @@
+import fs from 'fs';
 import { OpusEncoder } from '@discordjs/opus';
 import { EndBehaviorType, VoiceReceiver } from '@discordjs/voice';
 import { User } from 'discord.js';
 import { FileWriter } from 'wav';
-import { processVoice } from './vosk';
 import { Transform } from 'stream';
-import fs from 'fs';
-import { playVoiceFile } from '../events/utils';
-import { VOICE_LISA_HELLO, VOICE_THANK_YOU, VOICE_WELCOME, VOICE_YAMETE } from '../voiceUrls';
-import { setListenMode } from '../events/common';
-
-const getDisplayName = (userId: string, user?: User) => {
-	return user ? `${user.username}_${user.discriminator}` : userId;
-}
+import { getDisplayName } from '../utils';
+import { voiceProcessor } from '../client';
 
 export const createListeningStream = (receiver: VoiceReceiver, userId: string, user?: User) => {
 	const filename = `${__dirname}/../assets/recordings/${Date.now()}-${getDisplayName(userId, user)}.wav`;
@@ -31,22 +25,12 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
 
 	audioFile.on('done', () => {
 		fs.stat(filename, async (err, stats) => {
-			try {
-				// Only process file if its bigger than 10KB.
-				// This way we ignore empty recordings.
-				// Also ignore files bigger than 100KB, since they likely arent commands and take a long time to process
-				if (stats.size > 10000 && stats.size < 100000) {
-					const result = await processVoice(filename);
-					if (result.id === 1) {
-						playVoiceFile(VOICE_THANK_YOU);
-						setListenMode(false);
-					} else if (result.id === 2) {
-						playVoiceFile(VOICE_YAMETE);
-						setListenMode(false);
-					}
-				} else throw 'recording smaller than 10KB or bigger than 100KB'
-			} catch (err) {
-			} finally {
+			// Only process file if its bigger than 10KB.
+			// This way we ignore empty recordings.
+			// Also ignore files bigger than 100KB, since they likely arent commands and take a long time to process
+			if (stats.size > 10000 && stats.size < 100000) {
+				voiceProcessor.addToVoiceProcessQueue(filename);
+			} else {
 				fs.unlink(filename, () => undefined);
 			}
 		});

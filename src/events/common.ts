@@ -6,7 +6,7 @@ import { player } from "../client";
 import { connectedChannelId, setConnectedChannelId } from "../commands/join";
 import { createListeningStream } from "../voice-recognition/createListeningStream";
 import { VOICE_USER_JOINED, VOICE_USER_LEFT, VOICE_WELCOME } from "../voiceUrls";
-import { ATOM_ID, ATOM_TEAMSPEAK_CHANNEL, playVoiceFile } from "./utils";
+import { ATOM_ID, ATOM_TEAMSPEAK_CHANNEL, playVoiceFile } from "../utils";
 
 let listenMode = false;
 export const setListenMode = (value: boolean) => listenMode = value;
