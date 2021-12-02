@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { playVoiceFile } from '../utils';
 import { VOICE_THANK_YOU, VOICE_YAMETE } from '../voiceUrls';
-import { fuzzyMatcher, voskGrammar } from './voiceCommandConfig';
+import { fuzzyMatcher, voiceResponsesById, voskGrammar } from './voiceCommandConfig';
 const { logLevel, loadModel, transcriptFromFile } = require('@solyarisoftware/voskjs');
 
 interface VoskResult {
@@ -15,12 +15,16 @@ interface VoskResult {
 };
 
 export class VoskVoiceProcessor {
-  private voiceProcessQueue: string[] = [];
+  private voiceProcessQueue: string[];
   private model: unknown;
-  private isProcessingVoiceFile: boolean = false;
+  private isProcessingVoiceFile: boolean;
+  private moodScore: number;
 
   constructor(pathToModel: string) {
     this.model = loadModel(pathToModel);
+    this.voiceProcessQueue = [];
+    this.isProcessingVoiceFile = false;
+    this.moodScore = 50;
   }
   
   public startVoiceProcessing = async (log = -1) => {
@@ -54,16 +58,19 @@ export class VoskVoiceProcessor {
     this.voiceProcessQueue.length = 0;
   }
 
+  private modifyMoodScore(value: number) {
+    this.moodScore += value;
+
+    if (this.moodScore > 99) this.moodScore = 99;
+    else if (this.moodScore < 0) this.moodScore = 0;
+  }
+
   private processMatch(id: number) {
-    switch (id) {
-      case 1:
-        playVoiceFile(VOICE_THANK_YOU);
-        break;
-      case 2:
-        playVoiceFile(VOICE_YAMETE);
-        break;
-      default:
-    }
+    this.modifyMoodScore(voiceResponsesById[id].moodModifier);
+    const moodScore = Math.floor((this.moodScore / 2) / 10);
+    playVoiceFile(voiceResponsesById[id].responses[moodScore]);
+
+    console.log('current mood: ' + this.moodScore);
   }
 
   private async processVoiceFile(filename: string) {
