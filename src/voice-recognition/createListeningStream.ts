@@ -5,7 +5,7 @@ import { User } from 'discord.js';
 import { FileWriter } from 'wav';
 import { Transform } from 'stream';
 import { getDisplayName } from '../utils';
-import { voiceProcessor } from '../client';
+import { voskVoiceProcessor } from '../client';
 
 export const createListeningStream = (receiver: VoiceReceiver, userId: string, user?: User) => {
 	const filename = `${__dirname}/../assets/recordings/${Date.now()}-${getDisplayName(userId, user)}.wav`;
@@ -29,7 +29,7 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
 			// This way we ignore empty recordings.
 			// Also ignore files bigger than 100KB, since they likely arent commands and take a long time to process
 			if (stats.size > 10000 && stats.size < 100000) {
-				voiceProcessor.addToVoiceProcessQueue(filename);
+				voskVoiceProcessor.send(filename);
 			} else {
 				fs.unlink(filename, () => undefined);
 			}

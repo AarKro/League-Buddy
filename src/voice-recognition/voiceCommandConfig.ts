@@ -17,7 +17,7 @@ const voiceCommands = [
   },
   {
     id: 2,
-    matches: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'kys linus', 'idiot linus', 'baka linus', 'go commit die linus', 'baka', 'fuck you'],
+    matches: ['fuck off linus', 'shut up linus', 'no one cares linus', 'kill yourself linus', 'idiot linus', 'baka linus', 'go commit die linus', 'baka', 'fuck you linus'],
     voskGrammar: ['fuck off', 'shut up', 'kill yourself', 'baka', 'go commit die', 'no one cares', 'fuck you'],
     moodModifier: -5,
     voiceResponses: [
@@ -33,7 +33,7 @@ const voiceCommands = [
 const fuzzyMatchingConfig = {
   includeScore: true,
   keys: ['matches'],
-  threshold: 0.2
+  threshold: 0.2,
 };
 
 const fuzzyMatchingMatches = voiceCommands.map((command) => ({
@@ -50,7 +50,7 @@ export const voskGrammar = Array.from(new Set(voiceCommands
   .map((command) => command.voskGrammar)
   .reduce((acc, curr) => {
     return acc = [...acc, ...curr];
-  }, [])
+  }, ['linus'])
 ));
 
 export const voiceResponsesById: {[k: number]: { responses: string[], moodModifier: number }} = {};

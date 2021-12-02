@@ -3,13 +3,29 @@ import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
 import { createAudioPlayer } from "@discordjs/voice";
-import { VoskVoiceProcessor } from "./voice-recognition/VoskVoiceProcessor";
+import { fork } from 'child_process';
+import { processMatch } from "./voice-recognition/voiceCommandHandler";
 
 export const player = createAudioPlayer();
 
-const initialMood = Number(process.argv[2]) === 0 ? Number(process.argv[2]) :  Number(process.argv[2]) || 50;
-export const voiceProcessor = new VoskVoiceProcessor(__dirname + '/assets/vosk-model-en-us-0.22-lgraph', initialMood);
-voiceProcessor.startVoiceProcessing();
+export const voskVoiceProcessor = fork(`${ __dirname}/voice-recognition/voskVoiceProcessor.js`, [
+  `${__dirname}/assets/vosk-model-en-us-0.22-lgraph`,
+  '-1'
+]); 
+
+voskVoiceProcessor.on('message', (id: number) => {
+  processMatch(id);
+});
+
+voskVoiceProcessor.on("error", (err: any) => {
+  console.log('error in voskVoiceProcessor')
+  console.log(err);
+});
+
+voskVoiceProcessor.on("exit", (exitCode: any) => {
+  console.log('voskVoiceProcessor exited')
+  console.log(exitCode);
+});
 
 const client = new Client({
   simpleCommand: {
