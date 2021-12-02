@@ -7,7 +7,8 @@ import { VoskVoiceProcessor } from "./voice-recognition/VoskVoiceProcessor";
 
 export const player = createAudioPlayer();
 
-export const voiceProcessor = new VoskVoiceProcessor(__dirname + '/assets/vosk-model-en-us-0.22-lgraph');
+const initialMood = Number(process.argv[2]) === 0 ? Number(process.argv[2]) :  Number(process.argv[2]) || 50;
+export const voiceProcessor = new VoskVoiceProcessor(__dirname + '/assets/vosk-model-en-us-0.22-lgraph', initialMood);
 voiceProcessor.startVoiceProcessing();
 
 const client = new Client({

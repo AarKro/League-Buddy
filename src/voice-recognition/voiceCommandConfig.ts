@@ -33,7 +33,7 @@ const voiceCommands = [
 const fuzzyMatchingConfig = {
   includeScore: true,
   keys: ['matches'],
-  threshold: 0.3
+  threshold: 0.2
 };
 
 const fuzzyMatchingMatches = voiceCommands.map((command) => ({

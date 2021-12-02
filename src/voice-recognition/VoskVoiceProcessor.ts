@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { playVoiceFile } from '../utils';
-import { VOICE_THANK_YOU, VOICE_YAMETE } from '../voiceUrls';
 import { fuzzyMatcher, voiceResponsesById, voskGrammar } from './voiceCommandConfig';
 const { logLevel, loadModel, transcriptFromFile } = require('@solyarisoftware/voskjs');
 
@@ -20,11 +19,11 @@ export class VoskVoiceProcessor {
   private isProcessingVoiceFile: boolean;
   private moodScore: number;
 
-  constructor(pathToModel: string) {
+  constructor(pathToModel: string, moodScore: number) {
     this.model = loadModel(pathToModel);
     this.voiceProcessQueue = [];
     this.isProcessingVoiceFile = false;
-    this.moodScore = 50;
+    this.moodScore = moodScore;
   }
   
   public startVoiceProcessing = async (log = -1) => {
@@ -67,10 +66,10 @@ export class VoskVoiceProcessor {
 
   private processMatch(id: number) {
     this.modifyMoodScore(voiceResponsesById[id].moodModifier);
+    console.log('current mood: ' + this.moodScore);
+
     const moodScore = Math.floor((this.moodScore / 2) / 10);
     playVoiceFile(voiceResponsesById[id].responses[moodScore]);
-
-    console.log('current mood: ' + this.moodScore);
   }
 
   private async processVoiceFile(filename: string) {
