@@ -65,6 +65,7 @@ const processVoiceFile = async (filename: string) => {
       }
       
       console.log('--------------------------------------');
+      console.log(new Date().toLocaleString())
       console.log(result.text);
       console.log(bestMatch);
       console.log('--------------------------------------');
