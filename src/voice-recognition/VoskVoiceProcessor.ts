@@ -73,21 +73,21 @@ const processVoiceFile = async (filename: string) => {
 }
 
 const startVoiceProcessing = async () => {
-  isProcessingVoiceFile = true;
   while (voiceProcessQueue.length) {
     const filename = getItemFromVoiceProcessQueue();
     if (filename) {
       await processVoiceFile(filename);
     }
   }
-  isProcessingVoiceFile = false;
 }
 
 process.on('message', (filename: string) => {
   addToVoiceProcessQueue(filename);
 
   if (!isProcessingVoiceFile) {
+    isProcessingVoiceFile = true;
     startVoiceProcessing();
+    isProcessingVoiceFile = false;
   }
 });
 
