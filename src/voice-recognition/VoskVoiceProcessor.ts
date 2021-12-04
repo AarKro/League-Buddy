@@ -17,6 +17,19 @@ const voiceProcessQueue: string[] = [];
 const model: unknown = loadModel(process.argv[2]);
 let isProcessingVoiceFile: boolean = false;
 
+const startVoiceProcessing = async () => {
+  setInterval(async () => {
+    if (!isProcessingVoiceFile) {
+      const filename = getItemFromVoiceProcessQueue();
+      if (filename) {
+        isProcessingVoiceFile = true;
+        await processVoiceFile(filename);
+        isProcessingVoiceFile = false;
+      }
+    }
+  }, 333);  
+}
+  
 const addToVoiceProcessQueue = (filename: string) => {
   voiceProcessQueue.push(filename);
 }
@@ -72,23 +85,8 @@ const processVoiceFile = async (filename: string) => {
   return Promise.resolve();
 }
 
-const startVoiceProcessing = async () => {
-  while (voiceProcessQueue.length) {
-    const filename = getItemFromVoiceProcessQueue();
-    if (filename) {
-      await processVoiceFile(filename);
-    }
-  }
-}
-
 process.on('message', (filename: string) => {
   addToVoiceProcessQueue(filename);
-
-  if (!isProcessingVoiceFile) {
-    isProcessingVoiceFile = true;
-    startVoiceProcessing();
-    isProcessingVoiceFile = false;
-  }
 });
 
 logLevel(Number(process.argv[3]));
