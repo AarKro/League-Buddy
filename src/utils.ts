@@ -1,22 +1,27 @@
 import { createAudioResource, StreamType, entersState, AudioPlayerStatus } from "@discordjs/voice";
-import { User } from "discord.js";
 import { player } from "./client";
+import { connectedChannelId } from "./commands/join";
 
-export const ATOM_ID = '347761171933167616';
-export const ATOM_TEAMSPEAK_CHANNEL = '787069162123558922'; //'914524177137008661';
+export const playVoiceLine = (audioFileUrl: string) => {
+  if (!connectedChannelId) return Promise.resolve();
 
-export const playVoiceFile = (audioFileUrl: string) => {
-  if (player.state.status === AudioPlayerStatus.Idle) {
-    const resource = createAudioResource(audioFileUrl, {
-      inputType: StreamType.Arbitrary,
-    });
-    
-    player.play(resource);
-    
-    return entersState(player, AudioPlayerStatus.Playing, 5e3);
-  }
-}
+  const resource = createAudioResource(audioFileUrl, {
+    inputType: StreamType.Arbitrary,
+  });
   
-export const getDisplayName = (userId: string, user?: User) => {
-	return user ? `${user.username}_${user.discriminator}` : userId;
+  player.play(resource);
+  
+  entersState(player, AudioPlayerStatus.Playing, 5e3);
+
+  // return Promise which resolves when player is idle again
+  return new Promise<void>((resolve) => {
+    const id = setInterval(() => {
+      if (player.state.status === AudioPlayerStatus.Idle) {
+        resolve();
+        clearInterval(id);
+      }
+    }, 200)
+  })
 }
+
+export const noop = () => {};

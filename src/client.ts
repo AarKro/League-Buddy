@@ -1,31 +1,10 @@
-import "reflect-metadata";
 import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
 import { createAudioPlayer } from "@discordjs/voice";
-import { fork } from 'child_process';
-import { processMatch } from "./voice-recognition/voiceCommandHandler";
+import { startPolling } from "./lol/main";
 
 export const player = createAudioPlayer();
-
-export const voskVoiceProcessor = fork(`${ __dirname}/voice-recognition/voskVoiceProcessor.js`, [
-  `${__dirname}/assets/vosk-model-en-us-0.22-lgraph`,
-  '-1'
-]); 
-
-voskVoiceProcessor.on('message', (id: number) => {
-  processMatch(id);
-});
-
-voskVoiceProcessor.on("error", (err: any) => {
-  console.log('error in voskVoiceProcessor')
-  console.log(err);
-});
-
-voskVoiceProcessor.on("exit", (exitCode: any) => {
-  console.log('voskVoiceProcessor exited')
-  console.log(exitCode);
-});
 
 const client = new Client({
   simpleCommand: {
@@ -52,6 +31,8 @@ client.once("ready", async () => {
   await client.initApplicationPermissions();
 
   console.log("Bot started");
+
+  startPolling();
 });
 
 client.on("interactionCreate", (interaction: Interaction) => {

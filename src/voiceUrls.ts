@@ -1,19 +1,6 @@
 // const VOICE_FILE_BASE_URL = 'https://github.com/AarKro/Apollo/raw/main/src/assets/voice/';
 const VOICE_FILE_BASE_URL = __dirname + '/assets/voice/';
 
-export const VOICE_USER_JOINED = VOICE_FILE_BASE_URL + 'userjoin.mp3';
-export const VOICE_USER_LEFT = VOICE_FILE_BASE_URL + 'userleave.mp3';
-export const VOICE_USER_KICK = VOICE_FILE_BASE_URL + 'userkick.mp3';
-export const VOICE_WELCOME = VOICE_FILE_BASE_URL + 'welcome.mp3';
-export const VOICE_YAMETE = VOICE_FILE_BASE_URL + 'yamete.mp3';
-export const VOICE_LISA_HELLO = VOICE_FILE_BASE_URL + 'lisa_hello.mp3';
-export const VOICE_THANKS_0 = VOICE_FILE_BASE_URL + 'thanks_0.mp3';
-export const VOICE_THANKS_1 = VOICE_FILE_BASE_URL + 'thanks_1.mp3';
-export const VOICE_THANKS_2 = VOICE_FILE_BASE_URL + 'thanks_2.mp3';
-export const VOICE_THANKS_3 = VOICE_FILE_BASE_URL + 'thanks_3.mp3';
-export const VOICE_THANKS_4 = VOICE_FILE_BASE_URL + 'thanks_4.mp3';
-export const VOICE_FUCK_0 = VOICE_FILE_BASE_URL + 'fuck_0.mp3';
-export const VOICE_FUCK_1 = VOICE_FILE_BASE_URL + 'fuck_1.mp3';
-export const VOICE_FUCK_2 = VOICE_FILE_BASE_URL + 'fuck_2.mp3';
-export const VOICE_FUCK_3 = VOICE_FILE_BASE_URL + 'fuck_3.mp3';
-export const VOICE_FUCK_4 = VOICE_FILE_BASE_URL + 'fuck_4.mp3';
+export const VoiceLine = {
+  BOOP: VOICE_FILE_BASE_URL + 'boop.mp3',
+} 

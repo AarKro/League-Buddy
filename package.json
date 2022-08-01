@@ -1,12 +1,11 @@
 {
-  "name": "apollo",
+  "name": "",
   "version": "1.0.0",
-  "description": "sound based discord bot",
+  "description": "Discord bot who live reacts to LoL client events",
   "main": "build/client.js",
   "scripts": {
-    "build": "copyfiles -u 1 src/assets/** build/ && npx mkdirp build/assets/recordings/ && tsc",
-    "start": "npm run build && node build/client.js",
-    "dev": "ts-node src/client.ts"
+    "build": "copyfiles -u 1 src/assets/** build/ && tsc",
+    "start": "npm run build && node build/client.js"
   },
   "keywords": [
     "voice",
@@ -19,25 +18,17 @@
   "author": "AarKro",
   "homepage": "https://github.com/AarKro/Apollo",
   "devDependencies": {
-    "@types/wav": "^1.0.1",
     "copyfiles": "^2.4.1",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/voice": "^0.7.5",
     "@discordx/utilities": "^2.0.0",
-    "@solyarisoftware/voskjs": "^1.2.8",
+    "axios": "^0.27.2",
     "discord.js": "^13.2.0",
     "discordx": "^7.0.0",
-    "ffmpeg-static": "^4.4.0",
-    "fuse.js": "^6.4.6",
-    "node-crc": "^2.0.11",
-    "prism-media": "^2.0.0-alpha.0",
-    "reflect-metadata": "^0.1.13",
-    "tweetnacl": "^1.0.3",
-    "vosk": "^0.3.32",
-    "wav": "^1.0.2"
+    "tweetnacl": "^1.0.3"
   }
 }
