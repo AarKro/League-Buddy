@@ -1,0 +1,34 @@
+{
+  "name": "league-commentator",
+  "version": "1.0.0",
+  "description": "Discord bot who live reacts to LoL client events",
+  "main": "build/client.js",
+  "scripts": {
+    "build": "copyfiles -u 1 src/assets/** build/ && tsc",
+    "start": "npm run build && node build/client.js"
+  },
+  "keywords": [
+    "voice",
+    "discord.ts",
+    "discord.js",
+    "bot",
+    "discord",
+    "typescript"
+  ],
+  "author": "AarKro",
+  "homepage": "https://github.com/AarKro/Apollo",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/voice": "^0.7.5",
+    "@discordx/utilities": "^2.0.0",
+    "axios": "^0.27.2",
+    "discord.js": "^13.2.0",
+    "discordx": "^7.0.0",
+    "tweetnacl": "^1.0.3"
+  }
+}
