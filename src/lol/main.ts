@@ -10,14 +10,14 @@ const EVENT_PROCESSORS: {[k in EventType]: (event: any) => Promise<void>} = {
   [EventType.GAME_START]: EventProcessor.GameStart,
   [EventType.CHAMPION_KILL]: EventProcessor.ChampionKill,
   [EventType.MULTIKILL]: EventProcessor.Multikill,
-  [EventType.ITEM_CHANGE]: EventProcessor.ItemChange,
+  [EventType.INVENTORY_CHANGE]: EventProcessor.InventoryChange,
 };
 
 const EVENT_TRANSFORMERS: {[k in EventType]: (event: any, transformedData: LoLAPIEvent[]) => void} = {
   [EventType.GAME_START]: EventTransformers.Default,
   [EventType.CHAMPION_KILL]: EventTransformers.Default,
   [EventType.MULTIKILL]: EventTransformers.Multikill,
-  [EventType.ITEM_CHANGE]: EventTransformers.Default,
+  [EventType.INVENTORY_CHANGE]: EventTransformers.Default,
 }
 
 const PROCESSOR = {
@@ -33,7 +33,7 @@ const PROCESSOR = {
 
 export const startPolling = async () => {
   // we wait 5 seconds before starting the processor, and clear the queue before hand.
-  // this way the bot can be started mid game without crashing
+  // this way the bot can be started mid game with skipping the backlog of events and without crashing
   setTimeout(() => {
     GSS.queue = [];
     
@@ -63,10 +63,10 @@ export const startPolling = async () => {
       if (GSS.playerList[newPlayer.summonerName]) { // skip event creation if this is the first time getting player data so we dont have to constantly check for undefined
         const oldPlayer = GSS.playerList[newPlayer.summonerName];
 
-        // check for item change event
+        // check for inventory change event
         if (newPlayer.items.length !== oldPlayer.items.length || newPlayer.items.some((newItem) => !oldPlayer.items.find((oldItem) => newItem.itemID === oldItem.itemID))) {
           GSS.queue.push({
-            EventName: EventType.ITEM_CHANGE,
+            EventName: EventType.INVENTORY_CHANGE,
             oldPlayer: {...oldPlayer},
             newPlayer: {...newPlayer},
           } as LoLEvent);

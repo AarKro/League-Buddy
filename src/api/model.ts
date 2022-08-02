@@ -2,7 +2,7 @@ export enum EventType {
   GAME_START = "GameStart",
   CHAMPION_KILL = "ChampionKill",
   MULTIKILL = "Multikill",
-  ITEM_CHANGE = "ItemChange",
+  INVENTORY_CHANGE = "InventoryChange",
 }
 
 export interface LoLEvent {
@@ -28,7 +28,7 @@ export interface MultikillEvent extends ChampionKillEvent {
   KillStreak: number;
 }
 
-export interface ItemChangeEvent extends LoLEvent {
+export interface InventoryChangeEvent extends LoLEvent {
   oldPlayer: Champion;
   newPlayer: Champion;
 }
