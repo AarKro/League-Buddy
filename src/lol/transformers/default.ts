@@ -1,5 +1,5 @@
-import { LoLEvent } from "../../api/model";
+import { LoLAPIEvent } from "../../api/model";
 
-export const Default = (event: LoLEvent, transformedData: LoLEvent[]) => {
+export const Default = (event: LoLAPIEvent, transformedData: LoLAPIEvent[]) => {
   transformedData.push(event);
 }

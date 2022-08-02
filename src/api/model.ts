@@ -2,18 +2,23 @@ export enum EventType {
   GAME_START = "GameStart",
   CHAMPION_KILL = "ChampionKill",
   MULTIKILL = "Multikill",
+  ITEM_CHANGE = "ItemChange",
 }
 
 export interface LoLEvent {
+  EventName: EventType;
+  processorId?: number;
+}
+
+export interface LoLAPIEvent extends LoLEvent{
   EventID: number;
   EventTime: number;
-  EventName: EventType;
 }
 
-export interface GameStartEvent extends LoLEvent {
+export interface GameStartEvent extends LoLAPIEvent {
 }
 
-export interface ChampionKillEvent extends LoLEvent {
+export interface ChampionKillEvent extends LoLAPIEvent {
   KillerName: string;
   VictimName: string;
   Assisters: string[];
@@ -21,6 +26,11 @@ export interface ChampionKillEvent extends LoLEvent {
 
 export interface MultikillEvent extends ChampionKillEvent {
   KillStreak: number;
+}
+
+export interface ItemChangeEvent extends LoLEvent {
+  oldPlayer: Champion;
+  newPlayer: Champion;
 }
 
 export enum LoLTeam {
