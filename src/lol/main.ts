@@ -49,7 +49,7 @@ export const startPolling = async () => {
           PROCESSOR.process(item);
         }
       }
-    }, 1000);
+    }, 200);
   }, 5000);
 
   // polling for player data and filling queue
