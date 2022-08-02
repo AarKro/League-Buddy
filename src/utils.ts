@@ -1,6 +1,8 @@
 import { createAudioResource, StreamType, entersState, AudioPlayerStatus } from "@discordjs/voice";
 import { player } from "./client";
 import { connectedChannelId } from "./commands/join";
+import { GSS } from "./lol/gameSessionStorage";
+import { VoiceLine, VoiceLineTag } from "./voiceLineConfig";
 
 export const playVoiceLine = (audioFileUrl: string) => {
   if (!connectedChannelId) return Promise.resolve();
@@ -25,3 +27,13 @@ export const playVoiceLine = (audioFileUrl: string) => {
 }
 
 export const noop = () => {};
+
+export const isSummonerOnSameTeam = (summonerName: string) => {
+  return GSS.playerList[summonerName].team === GSS.playerList[GSS.activePlayerName].team
+}
+
+export const getVoiceLineWithTags = (...tags: VoiceLineTag[]) => {
+  const voiceLineKeys = (Object.keys(VoiceLine) as Array<keyof typeof VoiceLine>).filter((key) => VoiceLine[key].tags.some((tag) => tags.includes(tag)));
+
+  return VoiceLine[voiceLineKeys[Math.floor(Math.random() * voiceLineKeys.length)]].path;
+}
