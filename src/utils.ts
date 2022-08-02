@@ -1,4 +1,5 @@
 import { createAudioResource, StreamType, entersState, AudioPlayerStatus } from "@discordjs/voice";
+import { API } from "./api/api";
 import { player } from "./client";
 import { connectedChannelId } from "./commands/join";
 import { GSS } from "./lol/gameSessionStorage";
@@ -46,3 +47,8 @@ function* idGenerator() {
 }
 
 export const IDGenerator = idGenerator();
+
+export const saveActivePlayerNameToGSS = async () => {
+  const activePlayerName = await API.getActivePlayerName();
+  GSS.activePlayerName = activePlayerName;
+}
