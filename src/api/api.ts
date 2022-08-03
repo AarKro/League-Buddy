@@ -1,11 +1,11 @@
 import { request } from "./request"
-import { Champion, LoLAPIEvent } from "./model";
+import { Player, LoLAPIEvent } from "./model";
 
 export const API = {
   getEventData(): Promise<{Events: LoLAPIEvent[]}>  {
     return request("/eventdata");
   },
-  getPlayerData(): Promise<Champion[]> {
+  getPlayerData(): Promise<Player[]> {
     return request("/playerlist");
   },
   getActivePlayerName(): Promise<string> {

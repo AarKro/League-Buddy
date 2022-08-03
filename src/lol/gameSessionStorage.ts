@@ -1,9 +1,9 @@
-import { Champion, LoLEvent } from "../api/model"
+import { Player, LoLEvent } from "../api/model"
 
 interface GameSessionStorage {
   queue: LoLEvent[],
   lastEventDataIndex: number,
-  playerList: {[k: string]: Champion}; // player list by summoner name
+  playerList: {[k: string]: Player}; // player list by summoner name
   activePlayerName: string;
 }
 
