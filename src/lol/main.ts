@@ -11,6 +11,7 @@ const EVENT_PROCESSORS: {[k in EventType]: (event: any) => Promise<void>} = {
   [EventType.CHAMPION_KILL]: EventProcessor.ChampionKill,
   [EventType.MULTIKILL]: EventProcessor.Multikill,
   [EventType.INVENTORY_CHANGE]: EventProcessor.InventoryChange,
+  [EventType.PLAYER_LOADED]: EventProcessor.PlayerLoaded,
 };
 
 const EVENT_TRANSFORMERS: {[k in EventType]: (event: any, transformedData: LoLAPIEvent[]) => void} = {
@@ -18,6 +19,7 @@ const EVENT_TRANSFORMERS: {[k in EventType]: (event: any, transformedData: LoLAP
   [EventType.CHAMPION_KILL]: EventTransformers.Default,
   [EventType.MULTIKILL]: EventTransformers.Multikill,
   [EventType.INVENTORY_CHANGE]: EventTransformers.Default,
+  [EventType.PLAYER_LOADED]: EventTransformers.Default,
 }
 
 const PROCESSOR = {
@@ -60,18 +62,28 @@ export const startPolling = async () => {
 
     // check for player state based events and add them to queue
     data.forEach((newPlayer) => {
-      if (GSS.playerList[newPlayer.summonerName]) { // skip event creation if this is the first time getting player data so we dont have to constantly check for undefined
+      if (GSS.playerList[newPlayer.summonerName]) { 
+        // skip inventory event creation if this is the first time getting player data so we dont have to constantly check for undefined
         const oldPlayer = GSS.playerList[newPlayer.summonerName];
 
         // check for inventory change event
-        if (newPlayer.items.length !== oldPlayer.items.length || newPlayer.items.some((newItem) => !oldPlayer.items.find((oldItem) => newItem.itemID === oldItem.itemID))) {
+        if (
+            newPlayer.items.length !== oldPlayer.items.length
+            || newPlayer.items.some((newItem) => !oldPlayer.items.find((oldItem) => newItem.itemID === oldItem.itemID && newItem.count === oldItem.count))
+        ) {
           GSS.queue.push({
             EventName: EventType.INVENTORY_CHANGE,
             oldPlayer: {...oldPlayer},
             newPlayer: {...newPlayer},
           } as LoLEvent);
         }
-      }  
+      } else {
+        // player data was added, meaning a new game has begun
+        GSS.queue.push({
+          EventName: EventType.PLAYER_LOADED,
+          player: {...newPlayer},
+        } as LoLEvent);
+      }
 
       // save newest player data to GSS
       GSS.playerList[newPlayer.summonerName] = newPlayer;

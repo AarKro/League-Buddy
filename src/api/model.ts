@@ -3,6 +3,7 @@ export enum EventType {
   CHAMPION_KILL = "ChampionKill",
   MULTIKILL = "Multikill",
   INVENTORY_CHANGE = "InventoryChange",
+  PLAYER_LOADED = "PlayerLoaded",
 }
 
 export interface LoLEvent {
@@ -31,6 +32,10 @@ export interface MultikillEvent extends ChampionKillEvent {
 export interface InventoryChangeEvent extends LoLEvent {
   oldPlayer: Champion;
   newPlayer: Champion;
+}
+
+export interface PlayerLoadedEvent extends LoLEvent {
+  player: Champion
 }
 
 export enum LoLTeam {
