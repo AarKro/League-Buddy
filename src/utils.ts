@@ -8,13 +8,15 @@ import { VoiceLine, VoiceLineTags } from "./voiceLineConfig";
 export const playVoiceLine = (audioFileUrl: string) => {
   if (!connectedChannelId || !audioFileUrl) return Promise.resolve();
 
+  console.log(audioFileUrl);
+
+  if (process.argv[2] === "test") return Promise.resolve();
+
   const resource = createAudioResource(audioFileUrl, {
     inputType: StreamType.Arbitrary,
   });
   
   player.play(resource);
-  
-  console.log(audioFileUrl);
 
   entersState(player, AudioPlayerStatus.Playing, 5e3);
 
