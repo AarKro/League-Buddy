@@ -4,6 +4,7 @@ export enum EventType {
   MULTIKILL = "Multikill",
   NEW_ITEM = "NewItem",
   PLAYER_LOADED = "PlayerLoaded",
+  RANDOM = "Random",
 }
 
 export interface LoLEvent {
@@ -36,6 +37,9 @@ export interface NewItemEvent extends LoLEvent {
 
 export interface PlayerLoadedEvent extends LoLEvent {
   player: Player
+}
+
+export interface RandomEvent extends LoLEvent {
 }
 
 export enum LoLTeam {

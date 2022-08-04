@@ -2,7 +2,7 @@ import path from "path";
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
 import { createAudioPlayer } from "@discordjs/voice";
-import { startPolling } from "./lol/main";
+import { startLeagueClientProcesses } from "./lol/main";
 
 export const player = createAudioPlayer();
 
@@ -26,13 +26,12 @@ const client = new Client({
 client.once("ready", async () => {
   await client.initApplicationCommands({
     guild: { log: true },
-    global: { log: true },
   });
   await client.initApplicationPermissions();
 
   console.log("Bot started");
 
-  startPolling();
+  startLeagueClientProcesses();
 });
 
 client.on("interactionCreate", (interaction: Interaction) => {

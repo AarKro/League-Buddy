@@ -17,9 +17,6 @@ export interface VoiceLine {
 
 // spelled like this cause it kinda acts as an Enum
 export const VoiceLine: {[k: string]: VoiceLine} = {
-  // testing
-  BOOP: { path: VOICE_FILE_BASE_URL + "boop.mp3", tags: [VoiceLineTag.TESTING] },
-
   // game start
   GAME_START_GENERIC_1: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.GAME_START] },
   GAME_START_GENERIC_2: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.GAME_START] },
@@ -71,8 +68,8 @@ export const VoiceLine: {[k: string]: VoiceLine} = {
   TEEMO_TOP: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.TEEMO, LoLPosition.TOP] },
   TRYNDAMERE_TOP: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.TRYNDAMERE, LoLPosition.TOP] },
   MASTERYI_JUNGLE: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.MASTERYI, LoLPosition.JUNGLE] },
-  YONE_MID:  { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.YONE, LoLPosition.MIDDLE] },
-  YASUO_MID:  { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.YASUO, LoLPosition.MIDDLE] },
+  YONE_MID: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.YONE, LoLPosition.MIDDLE] },
+  YASUO_MID: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.YASUO, LoLPosition.MIDDLE] },
   AURELIONSOL_MID: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.AURELIONSOL, LoLPosition.MIDDLE] },
   SAMIRA_BOTTOM: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.SAMIRA, LoLPosition.BOTTOM] },
   YUUMI_SUPPORT: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.PLAYER_LOADED, LoLChampionName.YUUMI, LoLPosition.SUPPORT] },
@@ -80,4 +77,13 @@ export const VoiceLine: {[k: string]: VoiceLine} = {
   // items
   IMMORTAL_SHIELDBOW: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.NEW_ITEM, LoLItemID.IMMORTAL_SHIELDBOW] },
   ANATHEMAS_CHAINS: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.NEW_ITEM, LoLItemID.ANATHEMAS_CHAINS] },
+
+  // random
+  RANDOM_1: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.RANDOM] },
+  RANDOM_2: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.RANDOM] },
+  RANDOM_3: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.RANDOM] },
+  RANDOM_4: { path: VOICE_FILE_BASE_URL + "", tags: [EventType.RANDOM] },
+
+  // testing
+  BOOP: { path: VOICE_FILE_BASE_URL + "boop.mp3", tags: [VoiceLineTag.TESTING] },
 };

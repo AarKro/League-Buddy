@@ -14,6 +14,8 @@ export const playVoiceLine = (audioFileUrl: string) => {
   
   player.play(resource);
   
+  console.log(audioFileUrl);
+
   entersState(player, AudioPlayerStatus.Playing, 5e3);
 
   // return Promise which resolves when player is idle again

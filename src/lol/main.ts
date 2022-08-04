@@ -1,25 +1,16 @@
 
-import EventProcessor from "./processors";
-import EventTransformers from "./transformers"
 import { API } from "../api/api";
 import { EventType, LoLAPIEvent, LoLEvent } from "../model";
 import { clearGSS, GSS } from "./gameSessionStorage";
 import { IDGenerator, saveActivePlayerNameToGSS } from "../utils";
+import { EVENT_PROCESSORS } from "./processors";
+import { EVENT_TRANSFORMERS } from "./transformers";
 
-const EVENT_PROCESSORS: {[k in EventType]: (event: any) => Promise<void>} = {
-  [EventType.GAME_START]: EventProcessor.GameStart,
-  [EventType.CHAMPION_KILL]: EventProcessor.ChampionKill,
-  [EventType.MULTIKILL]: EventProcessor.Multikill,
-  [EventType.PLAYER_LOADED]: EventProcessor.PlayerLoaded,
-  [EventType.NEW_ITEM]: EventProcessor.NewItem,
-};
-
-const EVENT_TRANSFORMERS: {[k in EventType]: (event: any, transformedData: LoLAPIEvent[]) => void} = {
-  [EventType.GAME_START]: EventTransformers.Default,
-  [EventType.CHAMPION_KILL]: EventTransformers.Default,
-  [EventType.MULTIKILL]: EventTransformers.Multikill,
-  [EventType.PLAYER_LOADED]: EventTransformers.Default,
-  [EventType.NEW_ITEM]: EventTransformers.Default,
+export const startLeagueClientProcesses = () => {
+  startPlayerDataPolling();
+  startEventDataPolling();  
+  startRandomEventCreator();
+  startProcessor();
 }
 
 const PROCESSOR = {
@@ -33,7 +24,7 @@ const PROCESSOR = {
   }
 }
 
-export const startPolling = async () => {
+const startProcessor = () => {
   // we wait 5 seconds before starting the processor, and clear the queue before hand.
   // this way the bot can be started mid game with skipping the backlog of events and without crashing
   setTimeout(() => {
@@ -53,7 +44,9 @@ export const startPolling = async () => {
       }
     }, 200);
   }, 5000);
+}
 
+const startPlayerDataPolling = () => {
   // polling for player data and filling queue
   setInterval(async () => {
     const data = await API.getPlayerData();
@@ -89,7 +82,9 @@ export const startPolling = async () => {
       GSS.playerList[newPlayer.summonerName] = newPlayer;
     });
   }, 1000);
-  
+}
+
+const startEventDataPolling = () => {
   // polling for event data and filling queue
   setInterval(async () => {
     const data = await API.getEventData();
@@ -115,4 +110,19 @@ export const startPolling = async () => {
 
     GSS.queue.push(...transformedData);
   }, 1000);
+}
+
+// creating random events every 15 to 30 mins
+const startRandomEventCreator = async () => {
+  while (true) {
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        GSS.queue.push({
+          EventName: EventType.RANDOM
+        });
+  
+        resolve();
+      }, (Math.floor(Math.random() * (1800 - 900 + 1)) + 900) * 1000);
+    });
+  }
 }
