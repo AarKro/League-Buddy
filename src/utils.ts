@@ -10,14 +10,14 @@ export const playVoiceLine = (audioFileUrl: string) => {
 
   console.log(audioFileUrl);
 
-  if (process.argv[2] === "test") return Promise.resolve();
+  // if (process.argv[2] === "test") return Promise.resolve();
 
-  const resource = createAudioResource(audioFileUrl, {
+  const resource = createAudioResource(VoiceLine.BOOP.path, {
     inputType: StreamType.Arbitrary,
   });
   
   player.play(resource);
-
+  
   entersState(player, AudioPlayerStatus.Playing, 5e3);
 
   // return Promise which resolves when player is idle again

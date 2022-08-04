@@ -5,6 +5,9 @@ export enum EventType {
   NEW_ITEM = "NewItem",
   PLAYER_LOADED = "PlayerLoaded",
   RANDOM = "Random",
+  DRAGON_KILL = "DragonKill",
+  HERALD_KILL = "HeraldKill",
+  BARON_KILL = "BaronKill",
 }
 
 export interface LoLEvent {
@@ -40,6 +43,24 @@ export interface PlayerLoadedEvent extends LoLEvent {
 }
 
 export interface RandomEvent extends LoLEvent {
+}
+
+export interface EpicJungleMonsterKillEvent extends LoLAPIEvent {
+  Stolen: boolean;
+  KillerName: string;
+  Assisters: string[];
+}
+
+export interface BaronKillEvent extends EpicJungleMonsterKillEvent {
+
+}
+
+export interface HeraldKillEvent extends EpicJungleMonsterKillEvent {
+
+}
+
+export interface DragonKillEvent extends EpicJungleMonsterKillEvent {
+  DragonType: string;
 }
 
 export enum LoLTeam {

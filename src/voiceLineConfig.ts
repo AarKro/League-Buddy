@@ -6,6 +6,7 @@ export enum VoiceLineTag {
   TESTING,
   SAME_TEAM,
   ENEMY_TEAM,
+  JUNGLE_KILL_STOLEN,
 }
 
 export type VoiceLineTags = VoiceLineTag | EventType | LoLChampionName | LoLItemID | LoLPosition | MultikillType;
@@ -62,6 +63,20 @@ export const VoiceLine: {[k: string]: VoiceLine} = {
   MULTIKILL_QUADRA_2: { path: VOICE_FILE_BASE_URL + "multikill_quadra_2.mp3", tags: [EventType.MULTIKILL, MultikillType.QUADRA] },
   MULTIKILL_PENTA: { path: VOICE_FILE_BASE_URL + "multikill_penta.mp3", tags: [EventType.MULTIKILL, MultikillType.PENTA] },
   MULTIKILL_PENTA_ENEMY: { path: VOICE_FILE_BASE_URL + "multikill_penta_enemy.mp3", tags: [EventType.MULTIKILL, MultikillType.PENTA, VoiceLineTag.ENEMY_TEAM] },
+  
+  // epic jungle monster kills
+  DRAGON_KILL_1: { path: VOICE_FILE_BASE_URL + "dragon_kill_1.mp3", tags: [EventType.DRAGON_KILL] },
+  DRAGON_KILL_2: { path: VOICE_FILE_BASE_URL + "dragon_kill_2.mp3", tags: [EventType.DRAGON_KILL] },
+  DRAGON_KILL_3: { path: VOICE_FILE_BASE_URL + "dragon_kill_3.mp3", tags: [EventType.DRAGON_KILL] },
+  DRAGON_KILL_STOLEN: { path: VOICE_FILE_BASE_URL + "dragon_kill_stolen.mp3", tags: [EventType.DRAGON_KILL, VoiceLineTag.JUNGLE_KILL_STOLEN] },
+  DRAGON_KILL_STOLEN_ENEMY: { path: VOICE_FILE_BASE_URL + "dragon_kill_stolen_enemy.mp3", tags: [EventType.DRAGON_KILL, VoiceLineTag.JUNGLE_KILL_STOLEN, VoiceLineTag.ENEMY_TEAM] },
+  HERALD_KILL: { path: VOICE_FILE_BASE_URL + "herald_kill.mp3", tags: [EventType.HERALD_KILL] },
+  HERALD_KILL_STOLEN: { path: VOICE_FILE_BASE_URL + "herald_kill_stolen.mp3", tags: [EventType.HERALD_KILL, VoiceLineTag.JUNGLE_KILL_STOLEN] },
+  HERALD_KILL_STOLEN_ENEMY: { path: VOICE_FILE_BASE_URL + "herald_kill_stolen_enemy.mp3", tags: [EventType.HERALD_KILL, VoiceLineTag.JUNGLE_KILL_STOLEN, VoiceLineTag.ENEMY_TEAM] },
+  BARON_KILL_1: { path: VOICE_FILE_BASE_URL + "baron_kill_1.mp3", tags: [EventType.BARON_KILL] },
+  BARON_KILL_2: { path: VOICE_FILE_BASE_URL + "baron_kill_2.mp3", tags: [EventType.BARON_KILL] },
+  BARON_KILL_STOLEN: { path: VOICE_FILE_BASE_URL + "baron_kill_stolen.mp3", tags: [EventType.BARON_KILL, VoiceLineTag.JUNGLE_KILL_STOLEN] },
+  BARON_KILL_STOLEN_ENEMY: { path: VOICE_FILE_BASE_URL + "baron_kill_stolen_enemy.mp3", tags: [EventType.BARON_KILL, VoiceLineTag.JUNGLE_KILL_STOLEN, VoiceLineTag.ENEMY_TEAM] },
 
   // player loaded
   PLAYER_LOADED_VAYNE_TOP: { path: VOICE_FILE_BASE_URL + "player_loaded_vayne_top.mp3", tags: [EventType.PLAYER_LOADED, LoLChampionName.VAYNE, LoLPosition.TOP] },

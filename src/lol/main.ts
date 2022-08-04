@@ -51,7 +51,7 @@ const startPlayerDataPolling = () => {
   setInterval(async () => {
     const data = await API.getPlayerData();
 
-    if (!data) return; // most likely no game is running, so we return in order to not crash the bot
+    if (!data || !data.length) return; // most likely no game is running, so we return in order to not crash the bot
 
     // check for player state based events and add them to queue
     data.forEach((newPlayer) => {
