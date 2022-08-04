@@ -9,10 +9,10 @@ export const playVoiceLine = (audioFileUrl: string) => {
   if (!connectedChannelId || !audioFileUrl) return Promise.resolve();
 
   console.log(audioFileUrl);
+  let url = audioFileUrl;
+  if (process.argv[2] === "test") url = VoiceLine.BOOP.path;
 
-  // if (process.argv[2] === "test") return Promise.resolve();
-
-  const resource = createAudioResource(VoiceLine.BOOP.path, {
+  const resource = createAudioResource(url, {
     inputType: StreamType.Arbitrary,
   });
   
