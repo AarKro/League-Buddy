@@ -1,5 +1,7 @@
-import { InventoryChangeEvent } from "../../api/model";
+import { InventoryChangeEvent } from "../../model";
 
-export const InventoryChange = async (event: InventoryChangeEvent) => {
+export const InventoryChange = async ({newPlayer, oldPlayer}: InventoryChangeEvent) => {
+  
+
   return Promise.resolve();
 }

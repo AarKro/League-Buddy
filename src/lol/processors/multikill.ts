@@ -1,4 +1,4 @@
-import { MultikillEvent } from "../../api/model";
+import { MultikillEvent } from "../../model";
 import { getVoiceLineWithTags, isSummonerOnSameTeam, playVoiceLine } from "../../utils";
 import { VoiceLineTag } from "../../voiceLineConfig";
 

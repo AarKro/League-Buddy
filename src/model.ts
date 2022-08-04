@@ -43,13 +43,22 @@ export enum LoLTeam {
   CHAOS = "CHAOS",
 }
 
+export enum LoLPosition {
+  TOP = "TOP",
+  JUNGLE = "JUNGLE",
+  MIDDLE = "MIDDLE",
+  BOTTOM = "BOTTOM",
+  SUPPORT = "SUPPORT",
+  NONE = "",
+}
+
 export interface Player {
-  championName: string;
+  championName: LoLChampion;
   isBot: boolean;
   isDead: boolean;
   items: PlayerItem[];
   level: number;
-  position: string;
+  position: LoLPosition;
   rawChampionName: string;
   rawSkinName: string;
   respawnTimer: 0;
@@ -67,7 +76,7 @@ export interface PlayerItem {
   consumable: false;
   count: number;
   displayName: string;
-  itemID: number;
+  itemID: LoLItem;
   price: number;
   rawDescription: string;
   rawDisplayName: string;
@@ -121,7 +130,7 @@ export interface SummonerSpell {
   Update version in url (a) to desired version. Get JSON data from url and save into a.
   Run rest of code in js console - output will be in c
 */
-export enum Champion {
+export enum LoLChampion {
   AATROX = "Aatrox",
   AHRI = "Ahri",
   AKALI = "Akali",
@@ -314,7 +323,7 @@ export enum Champion {
       - 3903 -> RAISE_MORALE
 */
 
-export enum Item {
+export enum LoLItem {
   BOOTS = 1001,
   FAERIE_CHARM = 1004,
   REJUVENATION_BEAD = 1006,

@@ -1,4 +1,4 @@
-import { Player, LoLEvent } from "../api/model"
+import { Player, LoLEvent } from "../model"
 
 interface GameSessionStorage {
   queue: LoLEvent[],

@@ -1,4 +1,4 @@
-import { ChampionKillEvent } from "../../api/model";
+import { ChampionKillEvent } from "../../model";
 import { getVoiceLineWithTags, isSummonerOnSameTeam, playVoiceLine } from "../../utils";
 import { VoiceLine, VoiceLineTag } from "../../voiceLineConfig";
 

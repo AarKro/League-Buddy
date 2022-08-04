@@ -30,7 +30,10 @@ export const playVoiceLine = (audioFileUrl: string) => {
 export const noop = () => {};
 
 export const isSummonerOnSameTeam = (summonerName: string) => {
-  return GSS.playerList[summonerName].team === GSS.playerList[GSS.activePlayerName].team
+  if (!GSS.playerList[summonerName]) console.warn(`checking summoner team but summoner ${summonerName} isn't in GSS | ${GSS.playerList[summonerName]}`);
+  if (!GSS.playerList[GSS.activePlayerName]) console.warn(`checking summoner team but active summoner ${GSS.activePlayerName} isn't in GSS | ${GSS.playerList[GSS.activePlayerName]}`);
+
+  return GSS.playerList[summonerName]?.team === GSS.playerList[GSS.activePlayerName]?.team
 }
 
 export const getVoiceLineWithTags = (...tags: VoiceLineTag[]) => {

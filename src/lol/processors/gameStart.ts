@@ -1,4 +1,4 @@
-import { GameStartEvent } from "../../api/model";
+import { GameStartEvent } from "../../model";
 import { getVoiceLineWithTags, playVoiceLine } from "../../utils";
 import { VoiceLineTag } from "../../voiceLineConfig";
 

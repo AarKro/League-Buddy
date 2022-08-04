@@ -2,7 +2,7 @@
 import EventProcessor from "./processors";
 import EventTransformers from "./transformers"
 import { API } from "../api/api";
-import { EventType, LoLAPIEvent, LoLEvent } from "../api/model";
+import { EventType, LoLAPIEvent, LoLEvent } from "../model";
 import { clearGSS, GSS } from "./gameSessionStorage";
 import { IDGenerator, saveActivePlayerNameToGSS } from "../utils";
 
@@ -94,7 +94,7 @@ export const startPolling = async () => {
   setInterval(async () => {
     const data = await API.getEventData();
     
-    if (!data) return; // most likely no game is running, so we return in order to not crash the bot
+    if (!data || !data.Events.length) return; // most likely no game is running, so we return in order to not crash the bot
     
     // if we are in a new game we have to do some prep and resets for everything to work
     if (GSS.lastEventDataIndex === 0 || GSS.lastEventDataIndex > data.Events.length) {
