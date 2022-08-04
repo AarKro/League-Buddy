@@ -3,7 +3,7 @@ import { API } from "./api/api";
 import { player } from "./client";
 import { connectedChannelId } from "./commands/join";
 import { GSS } from "./lol/gameSessionStorage";
-import { VoiceLine, VoiceLineTag } from "./voiceLineConfig";
+import { VoiceLine, VoiceLineTags } from "./voiceLineConfig";
 
 export const playVoiceLine = (audioFileUrl: string) => {
   if (!connectedChannelId || !audioFileUrl) return Promise.resolve();
@@ -36,10 +36,12 @@ export const isSummonerOnSameTeam = (summonerName: string) => {
   return GSS.playerList[summonerName]?.team === GSS.playerList[GSS.activePlayerName]?.team
 }
 
-export const getVoiceLineWithTags = (...tags: VoiceLineTag[]) => {
-  const voiceLineKeys = (Object.keys(VoiceLine) as Array<keyof typeof VoiceLine>).filter((key) => VoiceLine[key].tags.some((tag) => tags.includes(tag)));
+export const getVoiceLineWithTags = (...tags: VoiceLineTags[]) => {
+  const voiceLineKeys = (Object.keys(VoiceLine) as Array<keyof typeof VoiceLine>).filter((key) => VoiceLine[key].tags.every((tag) => tags.includes(tag)));
 
-  return VoiceLine[voiceLineKeys[Math.floor(Math.random() * voiceLineKeys.length)]]?.path;
+  if (!voiceLineKeys.length) return "";
+  
+  return VoiceLine[voiceLineKeys[Math.floor(Math.random() * voiceLineKeys.length)]].path;
 }
 
 function* idGenerator() {

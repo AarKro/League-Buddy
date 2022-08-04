@@ -2,7 +2,7 @@ export enum EventType {
   GAME_START = "GameStart",
   CHAMPION_KILL = "ChampionKill",
   MULTIKILL = "Multikill",
-  INVENTORY_CHANGE = "InventoryChange",
+  NEW_ITEM = "NewItem",
   PLAYER_LOADED = "PlayerLoaded",
 }
 
@@ -26,12 +26,12 @@ export interface ChampionKillEvent extends LoLAPIEvent {
 }
 
 export interface MultikillEvent extends ChampionKillEvent {
-  KillStreak: number;
+  KillStreak: MultikillType;
 }
 
-export interface InventoryChangeEvent extends LoLEvent {
-  oldPlayer: Player;
-  newPlayer: Player;
+export interface NewItemEvent extends LoLEvent {
+  item: LoLItem;
+  player: Player;
 }
 
 export interface PlayerLoadedEvent extends LoLEvent {
@@ -52,11 +52,18 @@ export enum LoLPosition {
   NONE = "",
 }
 
+export enum MultikillType {
+  DOUBLE = 2,
+  TRIPPLE = 3,
+  QUADRA = 4,
+  PENTA = 5,
+}
+
 export interface Player {
-  championName: LoLChampion;
+  championName: LoLChampionName;
   isBot: boolean;
   isDead: boolean;
-  items: PlayerItem[];
+  items: LoLItem[];
   level: number;
   position: LoLPosition;
   rawChampionName: string;
@@ -71,12 +78,12 @@ export interface Player {
   team: LoLTeam;
 }
 
-export interface PlayerItem {
+export interface LoLItem {
   canUse: boolean;
   consumable: false;
   count: number;
   displayName: string;
-  itemID: LoLItem;
+  itemID: LoLItemID;
   price: number;
   rawDescription: string;
   rawDisplayName: string;
@@ -130,7 +137,7 @@ export interface SummonerSpell {
   Update version in url (a) to desired version. Get JSON data from url and save into a.
   Run rest of code in js console - output will be in c
 */
-export enum LoLChampion {
+export enum LoLChampionName {
   AATROX = "Aatrox",
   AHRI = "Ahri",
   AKALI = "Akali",
@@ -323,7 +330,7 @@ export enum LoLChampion {
       - 3903 -> RAISE_MORALE
 */
 
-export enum LoLItem {
+export enum LoLItemID {
   BOOTS = 1001,
   FAERIE_CHARM = 1004,
   REJUVENATION_BEAD = 1006,

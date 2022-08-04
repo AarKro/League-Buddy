@@ -10,16 +10,16 @@ const EVENT_PROCESSORS: {[k in EventType]: (event: any) => Promise<void>} = {
   [EventType.GAME_START]: EventProcessor.GameStart,
   [EventType.CHAMPION_KILL]: EventProcessor.ChampionKill,
   [EventType.MULTIKILL]: EventProcessor.Multikill,
-  [EventType.INVENTORY_CHANGE]: EventProcessor.InventoryChange,
   [EventType.PLAYER_LOADED]: EventProcessor.PlayerLoaded,
+  [EventType.NEW_ITEM]: EventProcessor.NewItem,
 };
 
 const EVENT_TRANSFORMERS: {[k in EventType]: (event: any, transformedData: LoLAPIEvent[]) => void} = {
   [EventType.GAME_START]: EventTransformers.Default,
   [EventType.CHAMPION_KILL]: EventTransformers.Default,
   [EventType.MULTIKILL]: EventTransformers.Multikill,
-  [EventType.INVENTORY_CHANGE]: EventTransformers.Default,
   [EventType.PLAYER_LOADED]: EventTransformers.Default,
+  [EventType.NEW_ITEM]: EventTransformers.Default,
 }
 
 const PROCESSOR = {
@@ -67,15 +67,15 @@ export const startPolling = async () => {
         const oldPlayer = GSS.playerList[newPlayer.summonerName];
 
         // check for inventory change event
-        if (
-            newPlayer.items.length !== oldPlayer.items.length
-            || newPlayer.items.some((newItem) => !oldPlayer.items.find((oldItem) => newItem.itemID === oldItem.itemID && newItem.count === oldItem.count))
-        ) {
-          GSS.queue.push({
-            EventName: EventType.INVENTORY_CHANGE,
-            oldPlayer: {...oldPlayer},
-            newPlayer: {...newPlayer},
-          } as LoLEvent);
+        const newItems = newPlayer.items.filter((newItem) => !oldPlayer.items.find((oldItem) => newItem.itemID === oldItem.itemID));
+        if (newItems.length) {
+          newItems.forEach((item) => {
+            GSS.queue.push({
+              EventName: EventType.NEW_ITEM,
+              item: {...item},
+              player: {...newPlayer}
+            } as LoLEvent);
+          });
         }
       } else {
         // player data was added, meaning a new game has begun
