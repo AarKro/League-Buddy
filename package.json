@@ -1,5 +1,5 @@
 {
-  "name": "league-commentator",
+  "name": "league-buddy",
   "version": "1.0.0",
   "description": "Discord bot who live reacts to LoL client events",
   "main": "build/client.js",
@@ -13,10 +13,12 @@
     "discord.js",
     "bot",
     "discord",
-    "typescript"
+    "typescript",
+    "League of Legends",
+    "LoL"
   ],
   "author": "AarKro",
-  "homepage": "https://github.com/AarKro/Apollo",
+  "homepage": "https://github.com/AarKro/League-Buddy",
   "devDependencies": {
     "copyfiles": "^2.4.1",
     "prettier": "^2.4.1",
