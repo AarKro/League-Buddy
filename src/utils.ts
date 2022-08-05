@@ -40,6 +40,10 @@ export const isSummonerOnSameTeam = (summonerName: string) => {
   return GSS.playerList[summonerName]?.team === GSS.playerList[GSS.activePlayerName]?.team
 }
 
+export const isKillerAPlayer = (killerName: string) => {
+  return Boolean(GSS.playerList[killerName]);
+}
+
 export const getVoiceLineWithTags = (...tags: VoiceLineTags[]) => {
   const voiceLineKeys = (Object.keys(VoiceLine) as Array<keyof typeof VoiceLine>).filter((key) => VoiceLine[key].tags.every((tag) => tags.includes(tag)));
 
