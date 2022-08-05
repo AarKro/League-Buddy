@@ -1,7 +1,5 @@
 import { EventType, LoLChampionName, LoLItemID, LoLPosition, MultikillType } from "./model";
 
-const VOICE_FILE_BASE_URL = __dirname + "/assets/voice/";
-
 export enum VoiceLineTag {
   TESTING,
   SAME_TEAM,
@@ -16,6 +14,8 @@ export interface VoiceLine {
   path: string;
   tags: VoiceLineTags[];
 }
+
+const VOICE_FILE_BASE_URL = __dirname + "/assets/voice/";
 
 // spelled like this cause it kinda acts as an Enum
 export const VoiceLine: {[k: string]: VoiceLine} = {
