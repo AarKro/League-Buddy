@@ -46,7 +46,7 @@ export interface RandomEvent extends LoLEvent {
 }
 
 export interface EpicJungleMonsterKillEvent extends LoLAPIEvent {
-  Stolen: boolean;
+  Stolen: "False" | "True";
   KillerName: string;
   Assisters: string[];
 }

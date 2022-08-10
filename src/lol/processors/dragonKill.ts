@@ -4,12 +4,12 @@ import { VoiceLineTag } from "../../voiceLineConfig";
 
 export const DragonKill = async ({ KillerName, Stolen, EventName }: DragonKillEvent) => {
   if (isSummonerOnSameTeam(KillerName)) {
-    if (Stolen) {
+    if (Stolen === "True") {
       await playVoiceLine(getVoiceLineWithTags(EventName, VoiceLineTag.JUNGLE_KILL_STOLEN));
     } else {
       await playVoiceLine(getVoiceLineWithTags(EventName));
     }
-  } else if (Stolen) {
+  } else if (Stolen === "True") {
     await playVoiceLine(getVoiceLineWithTags(EventName, VoiceLineTag.JUNGLE_KILL_STOLEN, VoiceLineTag.ENEMY_TEAM));
   }
 
