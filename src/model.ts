@@ -73,7 +73,7 @@ export enum LoLPosition {
   JUNGLE = "JUNGLE",
   MIDDLE = "MIDDLE",
   BOTTOM = "BOTTOM",
-  SUPPORT = "SUPPORT",
+  SUPPORT = "UTILITY",
   NONE = "",
 }
 

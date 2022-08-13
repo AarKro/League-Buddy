@@ -5,7 +5,7 @@ import { GSS } from "../gameSessionStorage";
 
 export const ChampionKill = async ({ KillerName, VictimName, EventName}: ChampionKillEvent) => {
   if (isKillerAPlayer(KillerName)) {
-    if (isSummonerOnSameTeam(KillerName)) {
+    if (isSummonerOnSameTeam(VictimName)) {
       await playVoiceLine(getVoiceLineWithTags(EventName, VoiceLineTag.SAME_TEAM));
     } else {
       const championSpecificVoiceLine = getVoiceLineWithTags(EventName, GSS.playerList[VictimName].championName);

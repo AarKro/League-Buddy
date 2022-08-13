@@ -16,7 +16,8 @@ export const startLeagueClientProcesses = () => {
 const PROCESSOR = {
   isProcessing: false,
   async process(event: LoLEvent) {
-    console.log(`---------- ${event.processorId} ${event.EventName} ----------`);
+    console.log(`--------------- ${event.processorId} ${event.EventName} ---------------`);
+    console.log(event)
 
     await EVENT_PROCESSORS[event.EventName](event);
 
