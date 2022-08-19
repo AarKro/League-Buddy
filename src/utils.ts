@@ -45,7 +45,9 @@ export const isKillerAPlayer = (killerName: string) => {
 }
 
 export const getVoiceLineWithTags = (...tags: VoiceLineTags[]) => {
-  const voiceLineKeys = (Object.keys(VoiceLine) as Array<keyof typeof VoiceLine>).filter((key) => VoiceLine[key].tags.every((tag) => tags.includes(tag)));
+  const voiceLineKeys = (Object.keys(VoiceLine) as Array<keyof typeof VoiceLine>)
+    .filter((key) => VoiceLine[key].tags.length === tags.length)
+    .filter((key) => VoiceLine[key].tags.every((tag) => tags.includes(tag)));
 
   if (!voiceLineKeys.length) return "";
   
