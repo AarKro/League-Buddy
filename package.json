@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.8.0",
-    "@discordjs/voice": "^0.7.5",
+    "@discordjs/voice": "^0.13.0",
     "@discordx/utilities": "^2.0.0",
     "axios": "^0.27.2",
     "discord.js": "^13.2.0",
