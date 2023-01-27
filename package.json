@@ -30,7 +30,7 @@
     "@discordx/utilities": "^2.0.0",
     "axios": "^0.27.2",
     "discord.js": "^13.2.0",
-    "discordx": "^7.0.0",
+    "discordx": "^11.6.0",
     "tweetnacl": "^1.0.3"
   }
 }
